@@ -1,0 +1,36 @@
+---
+- name: Install and start Apache on web servers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+
+    - name: Ensure httpd service is running and enabled
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: Copy fils
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html  
+
+- name: Install and start MariaDB on database servers
+  hosts: dbservers
+  become: yes
+  tasks:
+    - name: Install mariadb-server package
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Ensure mariadb service is running and enabled
+      service:
+        name: mariadb
+        state: started
+        enabled: true
+

@@ -1,0 +1,35 @@
+---
+- name: Install and start MariaDB on database servers
+  hosts: dbservers
+  become: yes
+  tasks:
+    - name: Install mariadb-server package
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Install Python Dependencies for Mysql
+      yum:
+        name: python3-PyMySQL
+      
+    - name: Ensure mariadb service is running and enabled
+      service:
+        name: mariadb
+        state: started
+        enabled: true
+
+    - name: Create a new database with name 'accounts'
+      community.mysql.mysql_db:
+        name: accounts
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock   
+
+    - name: Create database user with name 'Minhaj' 
+      community.mysql.mysql_user:
+        name: Minhaj
+        password: 12345
+        priv: '*.*:ALL'
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
+
+

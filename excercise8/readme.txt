@@ -1,0 +1,1 @@
+ok in this i'm using the db module to install add or remove the. In this excerise I'm using the ansible.cfg file as this is standard appraoch and i don;t need to mention the invention path evey time now 
